@@ -1,15 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Video</title>
+    <title>Learn Academy</title>
     <style>
-        * { margin: 0; padding: 0; }
-        video { width: 100vw; height: 100vh; object-fit: cover; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #000;
+            overflow: hidden;
+        }
+        /* Gambar langsung fullscreen */
+        #scareImage {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 999;
+        }
+        #scareImage img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body>
-    <video autoplay controls>
-        <source src="prank.mp4" type="video/mp4">
-    </video>
+
+    <!-- Gambar Scare (langsung tampil) -->
+    <div id="scareImage">
+        <img src="scare.jpg" alt="Scare Image">
+    </div>
+
+    <!-- Audio -->
+    <audio id="audio" src="scream2.mp3" preload="auto" loop></audio>
+
+    <script>
+        // Coba autoplay suara (mungkin diblokir browser)
+        var audio = document.getElementById("audio");
+        audio.muted = false;
+        audio.volume = 1.0;
+        audio.play().catch(function(error) {
+            console.log("Autoplay diblokir. Menunggu interaksi user...");
+        });
+
+        // Kalo autoplay gagal, putar suara setelah user klik di mana aja
+        document.body.addEventListener('click', function() {
+            audio.muted = false;
+            audio.play();
+        }, { once: true });
+
+        // Kalo user sentuh layar (HP)
+        document.body.addEventListener('touchstart', function() {
+            audio.muted = false;
+            audio.play();
+        }, { once: true });
+    </script>
 </body>
 </html>
